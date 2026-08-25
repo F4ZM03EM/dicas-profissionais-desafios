@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desafio 30 Dias — Dicas Profissionais</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#111111;
+    --panel:#1B1916;
+    --cream:#F4EBDD;
+    --gold:#F5B800;
+    --gold-dark:#C58A00;
+    --line: rgba(244,235,221,0.12);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--cream);
+    font-family:'Inter', sans-serif; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Anton', sans-serif; text-transform:uppercase; letter-spacing:0.01em; margin:0; color:var(--cream); font-weight:400; }
+  .mono{ font-family:'IBM Plex Mono', monospace; letter-spacing:0.03em; }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; }
+  .wrap{ max-width:920px; margin:0 auto; padding:0 20px; }
+
+  .halftone{
+    position:absolute; inset:0; opacity:0.08; pointer-events:none;
+    background-image:radial-gradient(circle, var(--cream) 1px, transparent 1.3px);
+    background-size:10px 10px;
+  }
+
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 20px; border-bottom:1px solid var(--line);
+  }
+  .brand{ font-family:'Anton',sans-serif; font-size:0.95rem; letter-spacing:0.02em; }
+  .topbar .tag{ font-size:0.65rem; opacity:0.5; font-family:'IBM Plex Mono',monospace; }
+
+  section{ padding:52px 20px; position:relative; }
+  .section-inner{ max-width:720px; margin:0 auto; }
+  .section-head{ text-align:center; margin-bottom:30px; }
+  .section-head h2{ font-size:1.5rem; line-height:1.25; }
+  .eyebrow{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:0.68rem;
+    letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:14px;
+  }
+
+  .btn{
+    display:inline-block; padding:16px 28px; border-radius:2px;
+    font-family:'Anton',sans-serif; font-size:0.92rem; letter-spacing:0.02em;
+    background:var(--gold); color:#141414; text-decoration:none; cursor:pointer;
+    transition:transform 0.15s ease, box-shadow 0.15s ease; border:none;
+  }
+  .btn:hover{ transform:translateY(-2px); box-shadow:0 10px 22px rgba(245,184,0,0.25); }
+  .btn-outline{ background:transparent; color:var(--cream); border:2px solid var(--cream); }
+  .btn-block{ display:block; width:100%; text-align:center; }
+  .cta-row{ text-align:center; margin-top:30px; }
+
+  /* HERO */
+  .hero{
+    position:relative; overflow:hidden; padding:52px 20px 48px; text-align:center;
+    background:linear-gradient(180deg, var(--panel) 0%, var(--bg) 100%);
+    border-bottom:2px solid var(--gold);
+  }
+  .hero-inner{ position:relative; max-width:640px; margin:0 auto; }
+  .hero-mascot{
+    width:88px; height:88px; border-radius:50%; border:3px solid var(--gold);
+    margin:0 auto 18px; box-shadow:0 8px 24px rgba(0,0,0,0.4);
+  }
+  .hero h1{ font-size:2.1rem; line-height:1.2; }
+  .hero h1 em{ font-style:normal; color:var(--gold); }
+  .hero p.lede{ margin-top:18px; font-size:1rem; opacity:0.82; max-width:42ch; margin-left:auto; margin-right:auto; }
+  .trust-line{
+    margin-top:22px; font-family:'IBM Plex Mono',monospace; font-size:0.72rem;
+    opacity:0.6; letter-spacing:0.04em;
+  }
+  .hero .btn{ margin-top:26px; padding:18px 32px; font-size:1rem; }
+
+  /* CYCLE (dor) */
+  .cycle{ display:flex; flex-direction:column; align-items:center; gap:2px; margin-bottom:28px; }
+  .cycle-step{
+    background:var(--panel); border:1px solid var(--line); padding:9px 20px;
+    border-radius:2px; font-family:'IBM Plex Mono',monospace; font-size:0.78rem;
+    letter-spacing:0.03em;
+  }
+  .cycle-arrow{ color:var(--gold); font-size:0.95rem; line-height:1; }
+  .cycle-loop{ text-align:center; font-size:0.78rem; opacity:0.55; font-style:italic; margin-top:6px; }
+
+  .bubbles{ display:flex; flex-direction:column; gap:10px; max-width:460px; margin:24px auto 0; }
+  .bubble{
+    background:var(--panel); border:1px solid var(--line); border-radius:2px;
+    padding:12px 16px; font-style:italic; opacity:0.85; font-size:0.92rem;
+  }
+  .bubble::before{ content:"\201C"; color:var(--gold); font-family:'Anton',sans-serif; margin-right:5px; }
+
+  .punchline{
+    text-align:center; margin-top:28px; font-size:1.15rem; max-width:32ch;
+    margin-left:auto; margin-right:auto; font-weight:600;
+  }
+  .punchline strong{ color:var(--gold); }
+  .soft-line{ text-align:center; opacity:0.7; font-size:0.92rem; margin-top:14px; max-width:38ch; margin-left:auto; margin-right:auto; }
+
+  /* COST SECTION */
+  .cost-quotes{ max-width:380px; margin:0 auto; opacity:0.8; font-size:0.94rem; }
+  .cost-quotes p{ margin:6px 0; }
+  .cost-flip{ text-align:center; margin-top:20px; font-size:1rem; color:var(--gold); font-weight:600; }
+  .cost-headline{
+    text-align:center; margin-top:32px; font-size:1.35rem; line-height:1.3; max-width:26ch;
+    margin-left:auto; margin-right:auto;
+  }
+  .cost-headline .gold{ color:var(--gold); }
+
+  /* SOLUTION */
+  .solution-panel{
+    display:flex; flex-direction:column; align-items:center; text-align:center; gap:16px;
+    background:var(--panel); border:2px solid var(--gold); border-radius:4px; padding:30px 24px;
+  }
+  .solution-panel img{ width:96px; height:96px; border-radius:50%; border:3px solid var(--gold); }
+  .solution-panel h3{ font-size:1.2rem; }
+  .solution-panel p{ opacity:0.85; font-size:0.95rem; max-width:38ch; }
+  .solution-panel .stress{ color:var(--gold); }
+  .solution-pre{ text-align:center; margin-bottom:24px; }
+  .solution-pre h3{ font-size:1.15rem; margin-bottom:8px; }
+  .solution-pre p{ opacity:0.82; font-size:0.94rem; max-width:42ch; margin:0 auto; }
+
+  /* MECHANISM */
+  .flow{
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:6px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.76rem;
+  }
+  .flow .step{
+    background:var(--panel); border:1px solid var(--line); padding:9px 14px; border-radius:2px;
+  }
+  .flow .arrow{ color:var(--gold); font-size:1rem; }
+  .mechanism-note{ text-align:center; margin-top:24px; opacity:0.82; max-width:40ch; margin-left:auto; margin-right:auto; font-size:0.95rem; }
+
+  /* BENEFITS */
+  .benefit-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .benefit-card{ background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:18px 16px; }
+  .benefit-card .tag{ font-family:'IBM Plex Mono',monospace; font-size:0.68rem; color:var(--gold); text-transform:uppercase; }
+  .benefit-card p{ margin-top:8px; font-size:0.88rem; opacity:0.85; }
+
+  /* PRODUCT SHOWCASE */
+  .product-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .product-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:4px;
+    padding:20px 14px; text-align:center; position:relative;
+  }
+  .product-card::before{
+    content:""; position:absolute; top:0; right:0; width:0; height:0;
+    border-style:solid; border-width:0 16px 16px 0; border-color:transparent var(--gold) transparent transparent;
+  }
+  .product-card .n{ font-family:'IBM Plex Mono',monospace; font-size:0.68rem; color:var(--gold); }
+  .product-card .t{ font-family:'Anton',sans-serif; font-size:0.9rem; margin-top:8px; text-transform:uppercase; }
+  .product-lines{ margin-top:12px; }
+  .product-lines span{ display:block; height:2px; background:var(--line); border-radius:2px; margin:6px auto; }
+  .product-lines span:nth-child(1){ width:70%; }
+  .product-lines span:nth-child(2){ width:85%; }
+  .product-lines span:nth-child(3){ width:55%; }
+  .product-note{ text-align:center; margin-top:22px; opacity:0.82; font-size:0.94rem; }
+
+  /* PROOF */
+  .proof-stats{ display:flex; justify-content:center; gap:30px; margin-bottom:26px; text-align:center; }
+  .proof-stats .num{ font-family:'Anton',sans-serif; font-size:1.6rem; color:var(--gold); }
+  .proof-stats .lbl{ font-size:0.7rem; opacity:0.6; font-family:'IBM Plex Mono',monospace; text-transform:uppercase; }
+  .proof-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .proof-shot{ border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+  .proof-shot img{ width:100%; }
+  .proof-caption{ text-align:center; font-size:0.72rem; opacity:0.55; margin-top:6px; font-family:'IBM Plex Mono',monospace; }
+
+  /* OFFER */
+  .offer-card{
+    background:var(--panel); border:2px solid var(--gold); border-radius:6px;
+    padding:32px 26px; text-align:center; max-width:420px; margin:0 auto;
+  }
+  .offer-card h3{ font-size:1.15rem; margin-bottom:10px; }
+  .mini-tabs{ display:flex; justify-content:center; gap:6px; margin:10px 0 16px; }
+  .mini-tab{
+    font-family:'IBM Plex Mono',monospace; font-size:0.68rem; padding:5px 13px;
+    border:1px solid var(--line); border-radius:12px; cursor:pointer; opacity:0.6;
+    transition:opacity 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+  .mini-tab:hover{ opacity:0.85; }
+  .mini-tab.active{ opacity:1; background:var(--gold); color:#141414; border-color:var(--gold); font-weight:600; }
+  .offer-old{ text-decoration:line-through; opacity:0.5; font-size:0.85rem; font-family:'IBM Plex Mono',monospace; }
+  .offer-value{ font-family:'Anton',sans-serif; font-size:2.6rem; color:var(--gold); margin:6px 0 4px; }
+  .offer-fx{ font-size:0.72rem; opacity:0.55; margin-bottom:18px; display:block; }
+  .offer-list{ list-style:none; padding:0; margin:0 0 22px; text-align:left; font-size:0.88rem; opacity:0.88; }
+  .offer-list li{ padding:5px 0; }
+  .offer-list li::before{ content:"— "; color:var(--gold); }
+
+  /* LETTER */
+  .letter{
+    background:var(--panel); border-left:3px solid var(--gold); padding:28px 22px;
+    display:flex; flex-direction:column; align-items:center; text-align:center; gap:16px;
+  }
+  .letter img{ width:76px; height:76px; border-radius:50%; border:2px solid var(--gold); }
+  .letter p{ font-style:italic; opacity:0.9; margin:0 0 6px; font-size:0.95rem; }
+  .letter .sign{ font-style:normal; font-family:'IBM Plex Mono',monospace; font-size:0.8rem; color:var(--gold); margin-top:10px; }
+
+  /* FINAL CTA */
+  .final-cta{ text-align:center; background:var(--panel); border-top:2px solid var(--gold); border-bottom:2px solid var(--gold); }
+  .final-cta h2{ font-size:1.5rem; margin-bottom:18px; }
+  .final-cta .offer-value{ margin-bottom:6px; }
+
+  /* FAQ */
+  .faq-item{ border-bottom:1px solid var(--line); padding:14px 0; }
+  .faq-q{ display:flex; justify-content:space-between; cursor:pointer; font-weight:600; font-size:0.94rem; }
+  .faq-q .plus{ color:var(--gold); font-family:'IBM Plex Mono',monospace; transition:transform 0.2s ease; }
+  .faq-item.open .plus{ transform:rotate(45deg); }
+  .faq-a{ max-height:0; overflow:hidden; transition:max-height 0.25s ease; font-size:0.88rem; opacity:0.78; }
+  .faq-item.open .faq-a{ padding-top:8px; }
+
+  .disclosure{ margin-top:16px; font-size:0.72rem; opacity:0.5; border-left:2px solid var(--gold-dark); padding-left:10px; }
+
+  footer{ padding:30px 20px; text-align:center; border-top:1px solid var(--line); }
+  footer p{ font-size:0.68rem; opacity:0.4; }
+
+  @media (min-width:720px){
+    .hero{ padding:80px 24px 64px; }
+    .hero-mascot{ width:110px; height:110px; }
+    .hero h1{ font-size:2.7rem; }
+    section{ padding:64px 24px; }
+    .benefit-grid{ grid-template-columns:repeat(3,1fr); }
+  }
+  @media (prefers-reduced-motion:reduce){ *{ transition:none !important; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Dicas Profissionais</div>
+  <div class="tag">Desafio 30 Dias</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="halftone"></div>
+  <div class="hero-inner">
+    <img src="img/doutor-mascote.png" alt="Dicas Profissionais" class="hero-mascot">
+    <span class="eyebrow">Desafio 30 dias · Dicas Profissionais</span>
+    <h1>Não precisas de mais motivação.<br>Precisas de voltar a ter <em>controlo</em> da tua vida.</h1>
+    <p class="lede">Um desafio prático de 30 dias para quem está cansado de adiar, começar e desistir — e sentir os dias a passar sem sair do lugar.</p>
+    <button type="button" class="btn" onclick="scrollToCheckout()">Começar os meus 30 dias</button>
+    <div class="trust-line">30 missões práticas · 1 por dia · acesso digital</div>
+  </div>
+</div>
+
+<!-- DOR: CICLO -->
+<section>
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">Talvez seja este o ciclo em que entraste</span>
+    </div>
+    <div class="cycle">
+      <div class="cycle-step">ADIAR</div>
+      <div class="cycle-arrow">↓</div>
+      <div class="cycle-step">SENTIR CULPA</div>
+      <div class="cycle-arrow">↓</div>
+      <div class="cycle-step">PROMETER MUDAR</div>
+      <div class="cycle-arrow">↓</div>
+      <div class="cycle-step">TENTAR</div>
+      <div class="cycle-arrow">↓</div>
+      <div class="cycle-step">DESISTIR</div>
+      <div class="cycle-arrow">↓</div>
+      <div class="cycle-step">VOLTAR AO MESMO</div>
+    </div>
+    <p class="cycle-loop">...e o ciclo recomeça.</p>
+
+    <p class="punchline">Sabes o que precisas de fazer.<br>Só continuas a <strong>adiar</strong>.</p>
+
+    <div class="bubbles">
+      <div class="bubble">Vou começar segunda-feira.</div>
+      <div class="bubble">Amanhã organizo a minha vida.</div>
+      <div class="bubble">Só mais 5 minutos no TikTok.</div>
+      <div class="bubble">Preciso de voltar a ter disciplina.</div>
+      <div class="bubble">Depois eu faço.</div>
+    </div>
+
+    <p class="soft-line">E o pior é que já percebeste que estás a fazer isto há semanas. Os dias continuam a passar — e continuas à espera do momento certo para começar.</p>
+  </div>
+</section>
+
+<!-- CUSTO DE CONTINUAR IGUAL -->
+<section style="background:var(--panel);">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">Mas e se nada mudar?</span>
+    </div>
+    <div class="cost-quotes">
+      <p>Daqui a 30 dias, podes continuar a dizer:</p>
+      <p>"Preciso de começar."</p>
+      <p>"Preciso de mais disciplina."</p>
+      <p>"Preciso de parar de procrastinar."</p>
+      <p>"Preciso de cuidar mais de mim."</p>
+    </div>
+    <p class="cost-flip">Ou podes estar 30 dias mais perto da pessoa que queres ser.</p>
+    <h2 class="cost-headline">30 dias vão passar <span class="gold">de qualquer maneira</span>.<br>A questão é: como queres estar quando eles terminarem?</h2>
+    <div class="cta-row"><button type="button" class="btn" onclick="scrollToCheckout()">Começar os meus 30 dias</button></div>
+  </div>
+</section>
+
+<!-- TRANSIÇÃO PARA SOLUÇÃO -->
+<section>
+  <div class="section-inner">
+    <div class="solution-pre">
+      <h3>Não precisas de mais um vídeo motivacional.</h3>
+      <p>Provavelmente já viste centenas. Eles motivam durante alguns minutos. Depois fechas o TikTok e a rotina continua igual.</p>
+      <p style="margin-top:12px;">O problema não é falta de informação. É transformar intenção em ação.</p>
+    </div>
+    <div class="solution-panel">
+      <img src="img/doutor-mascote.png" alt="">
+      <h3>Foi por isso que criámos o <span class="stress">Desafio 30 Dias</span>.</h3>
+      <p>Não é mais um PDF de frases motivacionais para leres e esqueceres. É um desafio prático: uma pequena missão por dia, durante 30 dias.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MECANISMO -->
+<section style="background:var(--panel);">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">Como funciona</span>
+      <h2>Pequenas batalhas, todos os dias</h2>
+    </div>
+    <div class="flow">
+      <span class="step">30 DIAS</span><span class="arrow">→</span>
+      <span class="step">30 MISSÕES</span><span class="arrow">→</span>
+      <span class="step">PEQUENAS AÇÕES</span><span class="arrow">→</span>
+      <span class="step">CONSISTÊNCIA</span><span class="arrow">→</span>
+      <span class="step">ROTINA MAIS ORGANIZADA</span>
+    </div>
+    <p class="mechanism-note">Não precisas de mudar a tua vida inteira amanhã. Precisas apenas de começar a vencer pequenas batalhas todos os dias.</p>
+  </div>
+</section>
+
+<!-- BENEFÍCIOS -->
+<section>
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">Durante os 30 dias</span>
+      <h2>O que vais ganhar</h2>
+    </div>
+    <div class="benefit-grid">
+      <div class="benefit-card"><span class="tag">Disciplina</span><p>Aprender a cumprir pequenas promessas feitas a ti mesmo.</p></div>
+      <div class="benefit-card"><span class="tag">Foco</span><p>Reduzir distrações e recuperar a atenção.</p></div>
+      <div class="benefit-card"><span class="tag">Autocuidado</span><p>Voltar a cuidar do corpo, do ambiente e da rotina.</p></div>
+      <div class="benefit-card"><span class="tag">Procrastinação</span><p>Parar de empurrar para amanhã o que podes começar hoje.</p></div>
+      <div class="benefit-card"><span class="tag">Rotina</span><p>Criar uma estrutura simples para os teus dias.</p></div>
+      <div class="benefit-card"><span class="tag">Mentalidade</span><p>Refletir sobre quem queres ser e que hábitos estão a impedir isso.</p></div>
+    </div>
+    <div class="cta-row"><button type="button" class="btn" onclick="scrollToCheckout()">Começar os meus 30 dias</button></div>
+  </div>
+</section>
+
+<!-- PRODUTO -->
+<section style="background:var(--panel);">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">Por dentro do desafio</span>
+      <h2>Vê o que vais receber</h2>
+    </div>
+    <div class="product-grid">
+      <div class="product-card"><span class="n">01</span><div class="t">Capa</div><div class="product-lines"><span></span><span></span><span></span></div></div>
+      <div class="product-card"><span class="n">02</span><div class="t">Missão diária</div><div class="product-lines"><span></span><span></span><span></span></div></div>
+      <div class="product-card"><span class="n">03</span><div class="t">Checklist</div><div class="product-lines"><span></span><span></span><span></span></div></div>
+      <div class="product-card"><span class="n">04</span><div class="t">Reflexão</div><div class="product-lines"><span></span><span></span><span></span></div></div>
+      <div class="product-card"><span class="n">05</span><div class="t">Registo 30 dias</div><div class="product-lines"><span></span><span></span><span></span></div></div>
+      <div class="product-card"><span class="n">06</span><div class="t">Acesso digital</div><div class="product-lines"><span></span><span></span><span></span></div></div>
+    </div>
+    <p class="product-note">Não foi criado para ser apenas lido. Foi criado para ser usado.</p>
+    <div class="cta-row"><button type="button" class="btn" onclick="scrollToCheckout()">Começar os meus 30 dias</button></div>
+  </div>
+</section>
+
+<!-- PROVA -->
+<section>
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">Prova</span>
+      <h2>Mais de 1.000 pessoas já acompanham o Dicas Profissionais</h2>
+    </div>
+    <div class="proof-stats">
+      <div><div class="num">+1.2mil</div><div class="lbl">Seguidores</div></div>
+      <div><div class="num">+2.4mil</div><div class="lbl">Gostos</div></div>
+    </div>
+    <div class="proof-grid">
+      <div>
+        <div class="proof-shot"><img src="img/perfil.jpeg" alt=""></div>
+        <p class="proof-caption">@dicas.profissiona6 — perfil real no TikTok</p>
+      </div>
+      <div>
+        <div class="proof-shot"><img src="img/conteudo.jpeg" alt=""></div>
+        <p class="proof-caption">Conteúdo real já publicado</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFERTA -->
+<section id="oferta" style="background:var(--panel);">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">Preço de lançamento</span>
+      <h2>Desafio 30 Dias</h2>
+    </div>
+    <div class="offer-card" data-tier="base">
+      <div class="mini-tabs" data-tabs id="checkout">
+        <span class="mini-tab active" data-country="mz">Moçambique</span>
+        <span class="mini-tab" data-country="br">Brasil</span>
+        <span class="mini-tab" data-country="pt">Portugal</span>
+      </div>
+      <span class="offer-old" data-old>399 MT</span>
+      <div class="offer-value" data-value>199 <span class="mono" style="font-size:1.2rem;">MT</span></div>
+      <span class="offer-fx" data-note>Pagamento por M-Pesa / e-Mola</span>
+      <ul class="offer-list">
+        <li>30 missões práticas</li>
+        <li>Checklist de progresso</li>
+        <li>Exercícios de reflexão</li>
+        <li>Acesso digital imediato</li>
+      </ul>
+      <a href="#" class="btn btn-block" data-checkout target="_blank" rel="noopener">Começar os meus 30 dias</a>
+    </div>
+  </div>
+</section>
+
+<!-- CARTA -->
+<section>
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">Uma última coisa antes de começares</span>
+    </div>
+    <div class="letter">
+      <img src="img/doutor-mascote.png" alt="">
+      <div>
+        <p>"Se chegaste até aqui, provavelmente já sabes que precisas de mudar alguma coisa."</p>
+        <p>"Mas não precisas de acordar amanhã e seres outra pessoa."</p>
+        <p>"Não precisas de mudar tudo de uma vez."</p>
+        <p>"Não precisas de ter motivação todos os dias."</p>
+        <p>"Precisas apenas de cumprir a próxima missão."</p>
+        <p>"Um dia. Depois outro. E mais outro."</p>
+        <p>"É assim que uma rotina nova começa."</p>
+        <div class="sign">— Dicas Profissionais</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="final-cta" data-tier="base">
+  <div class="section-inner">
+    <h2>30 dias vão passar de qualquer maneira.<br>A questão é: como queres estar quando eles terminarem?</h2>
+    <div class="mini-tabs" data-tabs style="justify-content:center;">
+      <span class="mini-tab active" data-country="mz">Moçambique</span>
+      <span class="mini-tab" data-country="br">Brasil</span>
+      <span class="mini-tab" data-country="pt">Portugal</span>
+    </div>
+    <div class="offer-value" data-value>199 <span class="mono" style="font-size:1.4rem;">MT</span></div>
+    <span class="offer-fx" data-note>Pagamento por M-Pesa / e-Mola</span>
+    <div class="cta-row"><a href="#" class="btn" data-checkout target="_blank" rel="noopener">Começar os meus 30 dias</a></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="eyebrow">Perguntas</span>
+      <h2>Antes de avançares</h2>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span>Em que formato recebo o desafio?</span><span class="plus">+</span></div>
+      <div class="faq-a"><p>Recebes tudo em PDF, pronto a usar no telemóvel ou computador, logo após a confirmação do pagamento.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span>Preciso de seguir a conta no TikTok para participar?</span><span class="plus">+</span></div>
+      <div class="faq-a"><p>Não é obrigatório, mas recomendamos — é lá que publicamos lembretes e conteúdo extra.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span>Há garantia?</span><span class="plus">+</span></div>
+      <div class="faq-a"><p>Sim — tens 7 dias de garantia. Se sentires que não é para ti, devolvemos o valor.</p></div>
+    </div>
+    <div class="disclosure">
+      "Doutor" é uma personagem ilustrada e fictícia da marca Dicas Profissionais — não é um médico real nem um especialista. O conteúdo é de motivação e organização pessoal, não substitui aconselhamento médico, psicológico ou financeiro profissional.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Dicas Profissionais — Desafio 30 Dias.</p>
+</footer>
+
+<script>
+  function scrollToCheckout(){
+    const el = document.getElementById("checkout");
+    if(!el) return;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+  }
+
+  // MZ é o valor real definido por Ercílio. BR e PT são conversão de câmbio verificada
+  // em 23/08/2026 (1 EUR ≈ 73,5 MT · 1 EUR ≈ 6,00 BRL).
+  const PRICE_TABLE = {
+    base: {
+      mz: { old:"399 MT", price:"199", cur:"MT", note:"Pagamento por M-Pesa / e-Mola", checkout:"https://checkout.escalepay.com/7934260" },
+      br: { old:"R$ 32,55", price:"16,25", cur:"R$", note:"Pagamento por Pix", checkout:"https://checkout.escalepay.com/4984240" },
+      pt: { old:"5,43 €", price:"2,71", cur:"€", note:"Pagamento por MB Way / cartão", checkout:"https://checkout.escalepay.com/6226983" }
+    }
+  };
+
+  document.querySelectorAll("[data-tier]").forEach(card=>{
+    const tier = card.dataset.tier;
+    const tabs = card.querySelectorAll(".mini-tab");
+    const valueEl = card.querySelector("[data-value]");
+    const oldEl = card.querySelector("[data-old]");
+    const noteEl = card.querySelector("[data-note]");
+    const checkoutEl = card.querySelector("[data-checkout]");
+
+    function render(country){
+      const d = PRICE_TABLE[tier][country];
+      valueEl.innerHTML = d.price + ' <span class="mono" style="font-size:1.1rem;">' + d.cur + '</span>';
+      if(oldEl) oldEl.textContent = d.old;
+      if(noteEl) noteEl.textContent = d.note;
+      if(checkoutEl) checkoutEl.setAttribute("href", d.checkout);
+    }
+
+    tabs.forEach(tab=>{
+      tab.addEventListener("click", ()=>{
+        tabs.forEach(t=>t.classList.remove("active"));
+        tab.classList.add("active");
+        render(tab.dataset.country);
+      });
+    });
+
+    render("mz");
+  });
+
+  document.querySelectorAll(".faq-item").forEach(item=>{
+    const q = item.querySelector(".faq-q");
+    const a = item.querySelector(".faq-a");
+    q.addEventListener("click", ()=>{
+      const isOpen = item.classList.contains("open");
+      document.querySelectorAll(".faq-item.open").forEach(o=>{
+        o.classList.remove("open");
+        o.querySelector(".faq-a").style.maxHeight = null;
+      });
+      if(!isOpen){
+        item.classList.add("open");
+        a.style.maxHeight = a.scrollHeight + "px";
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
